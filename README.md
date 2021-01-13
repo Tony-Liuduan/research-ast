@@ -5,6 +5,8 @@
 - [平庸前端码农之蜕变 — AST](https://juejin.cn/post/6844903725228621832)
 - [AST for JavaScript developers](https://itnext.io/ast-for-javascript-developers-3e79aeb08343)
 - [WRITE A BABEL PLUGIN](https://stephencook.dev/blog/writing-a-babel-plugin-with-grandma/)
+- [腾讯好文, 面向开发学习](http://www.alloyteam.com/2017/04/analysis-of-babel-babel-overview/)
+- [ast-api](http://www.alloyteam.com/wp-content/uploads/2017/04/1491466252_26_w899_h884.png)
 
 ## 词法分析和语法分析
 
@@ -62,12 +64,33 @@ const a = 1;
 
 ## babel-plugin
 
-1. 解析（parsing) - 创建了AST
-2. 转译（transforming）- 遍历树，修改tokens 
-3. 生成（generation）- 从AST中生成新的代码
+1. 解析（parsing) - 创建了AST - babylon
+2. 转译（transforming）- 遍历树，修改tokens - babel-traverse
+3. 生成（generation）- 从AST中生成新的代码 - babel-generator
+
+### 开发会用到的小..
+* 工具库 babel-types，用于构建、验证、变换节点
+* 参数path
+  * node节点
+  * parent节点
+  * path.node.x 返回value值
+  * path.get(x)返回子节点path
+* 树形遍历（enter+exit）+ 访问者模式（visitor）
+
+
+
+![ast-api-tree](http://www.alloyteam.com/wp-content/uploads/2017/04/1491466252_26_w899_h884.png)
+
+
+### babelrc - Plugin与Preset执行顺序
+* 先执行完所有Plugin，再执行Preset。
+* 多个Plugin，按照声明次序顺序执行。
+* 多个Preset，按照声明次序逆序执行。
+  - preset: [‘es2015’, ‘react’], 其实是先使用react插件再用es2015
 
 
 ## 好用的代码重构工具库
 * ts-morph
 * [jscodeshift](https://github.com/whxaxes/blog/issues/10)
+
 
